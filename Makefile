@@ -1,8 +1,8 @@
 CXX := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++20 -Iinclude
 
-LIB_SRC := src/hello_world.cc
-TEST_SRC := tests/hello_world_test.cc
+LIB_SRC := src/hello_world.cpp
+TEST_SRC := tests/hello_world_test.cpp
 
 all: test
 
