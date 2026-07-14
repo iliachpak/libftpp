@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include "../../src/internal/pool.hpp"
-#include "../../src/internal/DataBuffer.hpp"
+#include "DataBuffer.hpp"
+#include "Pool.hpp"
 
 void helloWorld(int it);
 void showData(DataBuffer const& data);
