@@ -50,6 +50,33 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp,\
 DEPS := $(OBJS:.o=.d)
 
 ################################################################################
+#                                  DOCKER                                      #
+################################################################################
+
+DOCKER_COMPOSE := docker compose
+DOCKER_SERVICE := libftpp-dev
+
+docker-build:
+	@printf "$(BLUE)[DOCKER]$(RESET) Building image\n"
+	@$(DOCKER_COMPOSE) build
+
+docker-shell:
+	@printf "$(GREEN)[DOCKER]$(RESET) Opening Debian 13 shell\n"
+	@$(DOCKER_COMPOSE) run --rm $(DOCKER_SERVICE)
+
+docker-up:
+	@printf "$(GREEN)[DOCKER]$(RESET) Starting container\n"
+	@$(DOCKER_COMPOSE) run --rm $(DOCKER_SERVICE)
+
+docker-clean:
+	@printf "$(RED)[DOCKER]$(RESET) Removing containers\n"
+	@$(DOCKER_COMPOSE) down --remove-orphans
+
+docker-test:
+	@printf "$(YELLOW)[DOCKER]$(RESET) Running tests\n"
+	@$(DOCKER_COMPOSE) run --rm $(DOCKER_SERVICE) make test
+
+################################################################################
 #                                 TEST FILES                                   #
 ################################################################################
 
@@ -173,6 +200,11 @@ info:
 	info \
 	clean \
 	fclean \
-	re
+	re \
+	docker-build \
+	docker-shell \
+	docker-up \
+	docker-clean \
+	docker-test
 
 -include $(DEPS)
