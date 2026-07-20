@@ -32,21 +32,3 @@ Object Pool pattern
 What does reusable mean in object pool
 
 
-├── docs
-│   ├── Architecture.md
-│   └── sources.md
-├── include
-│   └── libftpp
-│       ├── data
-│       │   ├── DataBuffer.hpp
-│       │   ├── data_structures.hpp
-│       │   └── Pool.hpp
-│       └── libftpp.hpp
-├── Makefile
-├── ReadMe.md
-├── src
-│   └── data
-│       └── hello_world.cpp
-└── tests
-    └── data
-        └── hello_world_test.cpp
