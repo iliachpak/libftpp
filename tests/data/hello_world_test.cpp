@@ -2,18 +2,13 @@
 
 int main() 
 {
-    Pool A;
-    DataBuffer B;
-    DataPuffer P;
+    std::string owner("ilia");
+    Pool A(owner);
 
     std::cout << "=========NESTED CLASS & ERITAGE=========" << std::endl;
-    helloWorld(A._prototype.x);
+
+    std::cout << "The object : " << A._prototype.getContent() << std::endl;
     std::cout << "===\n";
-    helloWorld(A._prototype.getY());
-    std::cout << "===\n";
-    showData(B);
-    std::cout << "===\n";
-    showData(P);
 
     std::cout << "=========TEMPLATE TESTS=========" << std::endl;
 

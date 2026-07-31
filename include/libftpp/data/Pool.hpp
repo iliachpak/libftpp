@@ -6,24 +6,34 @@
 #include <sstream>
 #include <stdexcept>
 
+template<typename TType>
 class Pool
 {
 public:
-    template<typename TType>
+    template<typename UType>
     class Object
     {
     public :
-        Object() { }
-        ~Object() { std::cout << "Pool::Object is destroyed << std::endl"; }
-        int getY() { return y; }
+        Object();
+        Object(UType content);
+        ~Object();
+        UType getContent() const;
     private :
-        TType _content;
+        UType _content;
     };
 
-    Object _prototype;
+    Pool();
+    Pool(TType a);
+    ~Pool();
+    
+    // push(TType a);
+
+    Object<TType> _prototype;
 private:
     
 };
+
+#include "Pool.tpp"
 
 /*-----------Template Practice-----------*/
 
