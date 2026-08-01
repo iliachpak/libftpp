@@ -10,16 +10,19 @@ template<typename TType>
 class Pool
 {
 public:
-    template<typename UType>
     class Object
     {
     public :
         Object();
-        Object(UType content);
+        Object(TType content);
+        Object(const Object& original);
         ~Object();
-        UType getContent() const;
+
+        bool AddContent(TType content);
+        bool AddContent(const Object& original);
+        TType getContent() const;
     private :
-        UType _content;
+        TType _content;
     };
 
     Pool();
@@ -28,7 +31,7 @@ public:
     
     // push(TType a);
 
-    Object<TType> _prototype;
+    Object _prototype;
 private:
     
 };

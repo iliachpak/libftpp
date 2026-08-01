@@ -1,5 +1,8 @@
 #include "libftpp/data/data_structures.hpp"
 
+bool test_parameterized_constructor();
+bool test_copy_constructor();
+
 int main() 
 {
     std::string owner("ilia");
@@ -24,6 +27,13 @@ int main()
     Array<int> brray;
     brray = array;
     std::cout << brray;
+
+    std::cout << "=========TESTS=========" << std::endl;
+
+    if (test_parameterized_constructor() && test_copy_constructor())
+        std::cout<< "The Pool::Object tests have passed successfully." << std::endl;
+    else 
+        std::cout<< "The Pool::Object tests have failed." << std::endl;
 
     return (0);
 }

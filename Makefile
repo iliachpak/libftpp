@@ -82,9 +82,7 @@ docker-test:
 
 TEST_SRCS := $(shell find $(TEST_DIR) -type f -name "*.cpp")
 
-TEST_BINS := $(patsubst $(TEST_DIR)/%.cpp,\
-	$(TEST_BUILD_DIR)/%,\
-	$(TEST_SRCS))
+TEST_BIN := $(TEST_BUILD_DIR)/run_tests
 
 ################################################################################
 #                                   COLORS                                     #
@@ -124,12 +122,15 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 #                               TEST BUILD                                     #
 ################################################################################
 
-tests: $(TEST_BINS)
+tests: $(TEST_BIN)
 
-$(TEST_BUILD_DIR)/%: $(TEST_DIR)/%.cpp $(LIBRARY)
+$(TEST_BIN): $(TEST_SRCS) $(LIBRARY)
 	@mkdir -p $(dir $@)
-	@printf "$(YELLOW)[TEST]$(RESET) %s\n" "$<"
-	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -L$(LIB_DIR) -lftpp -o $@
+	@printf "$(YELLOW)[TEST]$(RESET) building tests\n"
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) \
+		$(TEST_SRCS) \
+		-L$(LIB_DIR) -lftpp \
+		-o $@
 
 ################################################################################
 #                               RUN TESTS                                      #
@@ -140,13 +141,7 @@ test: tests
 	@printf "$(BLUE)===============================$(RESET)\n"
 	@printf "$(BLUE)Running unit tests$(RESET)\n"
 	@printf "$(BLUE)===============================$(RESET)\n"
-	@for test in $(TEST_BINS); do \
-		echo ""; \
-		echo ">> $$test"; \
-		$$test || exit 1; \
-	done
-	@echo
-	@printf "$(GREEN)All tests passed ✔$(RESET)\n"
+	@$(TEST_BIN)
 
 ################################################################################
 #                             BUILD MODES                                      #
