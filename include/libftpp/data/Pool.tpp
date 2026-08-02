@@ -26,6 +26,24 @@ Pool<TType>::Object::~Object()
 // methodes
 
 template<typename TType>
+bool Pool<TType>::Object::addContent(const TType content)
+{
+    if (_content == content)
+        return true;
+    return false;
+}
+
+template<typename TType>
+bool Pool<TType>::Object::copyContent(const Object& original)
+{
+    TType content = original.getContent();
+    if (!content)
+        return false;
+    _content = content;
+    return true;
+}
+
+template<typename TType>
 TType Pool<TType>::Object::getContent() const
 {
     return _content;

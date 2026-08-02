@@ -14,26 +14,30 @@ public:
     {
     public :
         Object();
-        Object(TType content);
-        Object(const Object& original);
+        Object(Pool* pool, TType* ptr);
+
+        Object(const Object&) = delete;
+        Object& operator=(const Object&) = delete;
+
+        Object(Object&& other) noexcept;
+        Object& operator=(Object&& other) noexcept;
+
         ~Object();
 
-        bool AddContent(TType content);
-        bool AddContent(const Object& original);
-        TType getContent() const;
+        TType* operator->():
+        TType& operator*();
+
+        bool valid() const;
+
     private :
-        TType _content;
+        Pool* _pool;
+        TType* _ptr;
     };
 
-    Pool();
-    Pool(TType a);
-    ~Pool();
-    
-    // push(TType a);
-
-    Object _prototype;
+public :
+    Object acquire();
 private:
-    
+    void release(TType* ptr);
 };
 
 #include "Pool.tpp"

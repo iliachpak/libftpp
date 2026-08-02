@@ -24,11 +24,17 @@ Object Pool pattern
 
 https://cdpstudio.com/manual/cdp/examples/myfirstlibraryandcomponent-tutorial.html
 
-## Next recherche
 
-C++ template class
-What is TType in C++
-Object Pool pattern
-What does reusable mean in object pool
+# Mastering some Advanced Design Patterns: Resource Pool 
 
-Petit test git
+https://dev.to/theodesp/mastering-some-advanced-design-patterns-resource-pool-1l64
+
+**3 intresting sources at the end of the article**
+
+# Object pool parter
+
+https://en.wikipedia.org/wiki/Object_pool_pattern
+
+# /!\ Encyclopedia for programming patterns
+
+https://www.oodesign.com/object-pool-pattern

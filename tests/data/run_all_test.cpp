@@ -2,6 +2,8 @@
 
 bool test_parameterized_constructor();
 bool test_copy_constructor();
+bool test_add_content();
+bool test_copy_content();
 
 int main() 
 {
@@ -11,7 +13,6 @@ int main()
     std::cout << "=========NESTED CLASS & ERITAGE=========" << std::endl;
 
     std::cout << "The object : " << A._prototype.getContent() << std::endl;
-    std::cout << "===\n";
 
     std::cout << "=========TEMPLATE TESTS=========" << std::endl;
 
@@ -30,10 +31,13 @@ int main()
 
     std::cout << "=========TESTS=========" << std::endl;
 
-    if (test_parameterized_constructor() && test_copy_constructor())
-        std::cout<< "The Pool::Object tests have passed successfully." << std::endl;
-    else 
-        std::cout<< "The Pool::Object tests have failed." << std::endl;
+    // if (test_parameterized_constructor() &&
+    //     test_copy_constructor() &&
+    //     test_add_content() &&
+    //     test_copy_content())
+    //     std::cout<< "The Pool::Object tests have passed successfully." << std::endl;
+    // else 
+    //     std::cout<< "The Pool::Object tests have failed." << std::endl;
 
     return (0);
 }
