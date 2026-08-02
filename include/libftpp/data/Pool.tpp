@@ -3,74 +3,95 @@
 // constructor
 
 template<typename TType>
-Pool<TType>::Object::Object()
+Pool<TType>::Object::Object() : _pool(nullptr), _ptr(nullptr)
 {
 }
 
 template<typename TType>
-Pool<TType>::Object::Object(TType content) : _content(content) 
+Pool<TType>::Object::Object(Pool* pool, TType* ptr) : _pool(pool), _ptr(ptr)
 {
 }
 
+// move
+
 template<typename TType>
-Pool<TType>::Object::Object(const Object& original) : _content(original.getContent())
+Pool<TType>::Object::Object(Object&& other) noexcept
+    : _pool(other._pool), _ptr(other._ptr)
 {
+    other.pool = nullptr;
+    other.ptr = nullptr;
 }
+
+template<typename TType>
+Pool<TType>::Object& Pool<TType>::Object::operator=(Object&& other) noexcept
+{
+    _pool = other._pool;
+    _ptr = other._ptr;
+    other._pool = nullptr;
+    other._ptr = nullptr;
+    return *this;
+}
+
+// destructor
 
 template<typename TType>
 Pool<TType>::Object::~Object()
 {
-    // std::cout << "Object destroyed" << std::endl;
+    _pool->release(_ptr);
+}
+
+// operator
+
+template<typename TType>
+TType* Pool<TType>::Object::operator->()
+{
+    return _ptr;
+}
+
+template<typename TType>
+TType& Pool<TType>::Object::operator*()
+{
+    return *_ptr;
 }
 
 // methodes
 
 template<typename TType>
-bool Pool<TType>::Object::addContent(const TType content)
+bool Pool<TType>::Object::valid() const
 {
-    if (_content == content)
+    if (_ptr != nullptr)
         return true;
     return false;
 }
 
-template<typename TType>
-bool Pool<TType>::Object::copyContent(const Object& original)
-{
-    TType content = original.getContent();
-    if (!content)
-        return false;
-    _content = content;
-    return true;
-}
+/*====Pool====*/
+
+//private
 
 template<typename TType>
-TType Pool<TType>::Object::getContent() const
+void Pool<TType>::release(TType* ptr)
 {
-    return _content;
+    ptr = nullptr;
 }
 
-/*=======Pool========*/
-
+// public
 // constructor
 
 template<typename TType>
-Pool<TType>::Pool()
+Pool<TType>::Pool(int size)
 {
-}
-
-template<typename TType>
-Pool<TType>::Pool(TType a) : _prototype(a)
-{
+    _pool = new Pool[size];
 }
 
 template<typename TType>
 Pool<TType>::~Pool()
 {
+    delete[] _pool;
 }
 
-// methodes
-
-// template<typename TType>
-// Pool<TType>::Pool()
-// {
-// }
+template<typename TType>
+Pool<TType>::Object Pool<TType>::acquire()
+{
+    Object res(*this, _pool[0]);
+    return res;
+}
