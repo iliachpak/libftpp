@@ -1,10 +1,8 @@
 #ifndef POOL_HPP
 #define POOL_HPP
 
+
 #include <cstddef>
-#include <iostream>
-#include <sstream>
-#include <stdexcept>
 
 template<typename TType>
 class Pool
@@ -25,9 +23,13 @@ public:
         ~Object();
 
         TType* operator->();
-        TType& operator*();
+        const TType* operator->() const;
 
-        bool valid() const;
+        TType& operator*();
+        const TType& operator*() const;
+
+        explicit operator bool() const noexcept;
+        bool valid() const noexcept;
 
     private :
         Pool* _pool;
@@ -35,97 +37,43 @@ public:
     };
 
 public :
-    Pool(int size);
+
+    Pool();
     ~Pool();
 
-    Object acquire();
+    Pool(const Pool&) = delete;
+    Pool& operator=(const Pool&) = delete;
+
+    Pool(Pool&&) = delete;
+    Pool& operator=(Pool&&) = delete;
+
+    void resize(const size_t& numberOfObjectStored);
+
+    template<typename... TArgs>
+    Object acquire(TArgs&&... args);
+
 private:
+
     void release(TType* ptr);
 
-    TType* _pool;
+private:
 
+    TType* _memory;
+    size_t _capacity;
+    size_t _available;
+
+    TType** _freeList;
+
+    friend class Object;
 };
 
 #include "Pool.tpp"
 
-/*-----------Template Practice-----------*/
-
-// template<typename ELEMENT>
-// class Array
-// {
-// public :
-//     Array(size_t size = 10);
-//     Array(const Array<ELEMENT>& original);
-//     ~Array();
-
-//     size_t getSize() const;
-
-//     Array<ELEMENT>& operator=(const Array<ELEMENT>& original);
-//     ELEMENT& operator[](size_t position) const;
-// private :
-//     ELEMENT* _rawArray;
-//     size_t _size;
-// };
-
-// template<typename ELEMENT>
-// std::ostream& operator<<(std::ostream& os, const Array<ELEMENT>& array)
-// {
-//     os << "The Array contain :\n";
-
-//     for (size_t i = 0; i < array.getSize(); i++)
-//         os << i << " : " << array[i] << "\n";
-//     return os;
-// }
-
-// /*----------methodes---------*/
-
-// template<typename ELEMENT>
-// Array<ELEMENT>::Array(size_t size) : _size(size)
-// {
-//     _rawArray = new ELEMENT[size];
-// }
-
-// template <typename ELEMENT>
-// Array<ELEMENT>::Array( const Array<ELEMENT>& original ) {
-//     this->_rawArray = nullptr;
-//     *this = original;
-// }
-
-// template <typename ELEMENT>
-// Array<ELEMENT>::~Array()
-// {
-//     delete[] _rawArray;
-// }
-
-// template<typename ELEMENT>
-// size_t Array<ELEMENT>::getSize() const 
-// {
-//     return _size;
-// }
-
-// template<typename ELEMENT>
-// Array<ELEMENT>& Array<ELEMENT>::operator=(const Array<ELEMENT>& original)
-// {
-//     if (this != &original)
-//     {
-//         delete[] _rawArray;
-//         _size = original._size;
-//         _rawArray = new ELEMENT[_size];
-
-//         for (size_t i = 0; i < _size; i++)
-//             _rawArray[i] = original._rawArray[i];
-//     }
-
-//     return *this;
-// }
-
-// template<typename ELEMENT>
-// ELEMENT& Array<ELEMENT>::operator[](size_t position) const
-// {
-//     if (position >= _size)
-//     throw std::out_of_range("Index out of range");
-
-//     return _rawArray[position];
-// }
-
 #endif
+
+/* Notes de reprise :
+*   J'ai demande a chat gpt comment rechercher et tombe sur les bonnes ressources.
+*   Dans son chat il explique des methodes, refait les recherches pour retracer
+*   comme lui les informations utile pour la conception de LA solution.
+*   Il donne des methodologies, apprends les.
+*/
