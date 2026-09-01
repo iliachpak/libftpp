@@ -70,10 +70,3 @@ private:
 #include "Pool.tpp"
 
 #endif
-
-/* Notes de reprise :
-*   J'ai demande a chat gpt comment rechercher et tombe sur les bonnes ressources.
-*   Dans son chat il explique des methodes, refait les recherches pour retracer
-*   comme lui les informations utile pour la conception de LA solution.
-*   Il donne des methodologies, apprends les.
-*/

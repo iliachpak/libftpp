@@ -38,3 +38,11 @@ https://en.wikipedia.org/wiki/Object_pool_pattern
 # /!\ Encyclopedia for programming patterns
 
 https://www.oodesign.com/object-pool-pattern
+
+# Placement new
+
+https://www.geeksforgeeks.org/cpp/placement-new-operator-cpp/
+
+# variadic fonction template
+
+https://www.geeksforgeeks.org/cpp/variadic-function-templates-c/
